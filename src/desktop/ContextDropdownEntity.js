@@ -23,9 +23,9 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
         var extendedData = self.extendedData;
         
         // Check defaults
-        self.properties.allowempty = self.properties.allowempty ? self.getBoolean(self.properties.allowempty): true;
-        self.properties.texteditable = self.properties.texteditable ? self.getBoolean(self.properties.texteditable): true;
-        self.properties.emptytext = self.properties.emptytext ? self.properties.emptytext: "-";
+        self.properties.allowempty = (self.properties.allowempty != undefined) ? self.getBoolean(self.properties.allowempty): true;
+        self.properties.texteditable = (self.properties.texteditable != undefined) ? self.getBoolean(self.properties.texteditable): true;
+        self.properties.emptytext = (self.properties.emptytext != undefined) ? self.properties.emptytext: "-";
         try {
             debugger;
             if (self.properties.designMode) {
@@ -53,7 +53,7 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
             self.myinput = $.tmpl(template, result);
             console.log(self.properties.texteditable);
 
-            if (self.getBoolean(self.properties.texteditable)) {
+            if (!self.getBoolean(self.properties.texteditable)) {
                 var input = $("input", self.myinput);
                 // If jquery > 1.9
                 if (input.prop) {
