@@ -132,6 +132,27 @@
           }
         }
       },
+      "texteditable": {
+        "bas-type": "boolean",
+        "caption": {
+          "default": "Text Editable"
+        },
+        "default": "true"
+      },
+      "allowempty": {
+        "bas-type": "boolean",
+        "caption": {
+          "default": "Allow Empty Value"
+        },
+        "default": "true"
+      },
+      "emptytext": {
+        "bas-type": "string",
+        "caption": {
+          "default": "Empty Text"
+        },
+        "default": "-"
+      },
       "required": {
         "bas-type": "rule-expression",
         "caption": {
@@ -295,12 +316,24 @@
                 "value": "editable"
               },
               {
+                  "type": "property",
+                  "value": "texteditable"
+              },
+              {
                 "type": "property",
                 "value": "required"
               },
               {
                 "type": "property",
                 "value": "submitOnChange"
+              },
+              {
+                  "type": "property",
+                  "value": "allowempty"
+              },
+              {
+                  "type": "property",
+                  "value": "emptytext"
               }
             ]
           }
@@ -397,6 +430,27 @@
         "type": "rule",
         "metavalue": "<design:editable:rule>",
         "depends": "<design:editable:rule>"
+      },
+      {
+        "name": "texteditable",
+        "type": "boolean",
+        "metavalue": "<design:texteditable>",
+        "depends": "<design:texteditable>",
+        "designvalue": "<design:texteditable>"
+      },
+      {
+        "name": "allowempty",
+        "type": "boolean",
+        "metavalue": "<design:allowempty>",
+        "depends": "<design:allowempty>",
+        "designvalue": "<design:allowempty>"
+      },
+      {
+        "name": "emptytext",
+        "type": "string",
+        "metavalue": "<design:emptytext>",
+        "depends": "<design:emptytext>",
+        "designvalue": "<design:emptytext>"
       },
       {
         "name": "required",

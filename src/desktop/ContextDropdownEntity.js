@@ -9,6 +9,12 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
     getReadonlyControl: function () {
         return this.getGenericControl();
     },
+    
+    getBoolean: function(val) {
+        var result = (val == "true" || val == true);
+        return result;
+    },
+    
     getGenericControl: function () {
         //standard initialization
         var self = this;
@@ -16,27 +22,51 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
         var properties = self.properties;
         var extendedData = self.extendedData;
         
+        // Check defaults
+        self.properties.allowempty = self.properties.allowempty ? self.getBoolean(self.properties.allowempty): true;
+        self.properties.texteditable = self.properties.texteditable ? self.getBoolean(self.properties.texteditable): true;
+        self.properties.emptytext = self.properties.emptytext ? self.properties.emptytext: "-";
         try {
-        if (self.properties.designMode) {
-            self.properties.data = [ { id: 1, value: 'test1'}, { id: 2, value: 'test2' }]
-            self.properties.value = "1";
-        } else {
-            self.properties.data = JSON.parse(self.properties.data);
-        }
-        
-        console.log("xpath: " + properties.sdata);
-        
-        //console.log('getGenericControl data: ' + self.properties.data);
-        var template = '<div class="ui-selectmenu"><div class="ui-select-data-container"><input class="ui-select-data ui-selectmenu-value" type="text" role="textbox" id="${id}" value="${value}" />    </div>	<div class="ui-selectmenu-btn"><i class="biz-btn-caret"></i></div></div>';
-        
-        var result = self.findDataById(self.properties.value);
-        self.myinput = $.tmpl(template, result);
-        
-        self.inputCombo = self.inputCombo = $(".ui-selectmenu-value", self.myinput);
-        self.selectedValue = result;
-        debugger;
-        
-        self.configureBindings();
+            debugger;
+            if (self.properties.designMode) {
+                self.properties.data = [ { id: 1, value: 'test1'}, { id: 2, value: 'test2' }]
+                self.properties.value = "1";
+            } else {
+                self.properties.data = JSON.parse(self.properties.data);
+            }
+            
+            if (self.getBoolean(self.properties.allowempty)) {
+                var emptyValue = { id: undefined, value: self.properties.emptytext }
+                self.properties.data.splice(0, 0, emptyValue);
+            }
+            console.log("xpath: " + properties.sdata);
+            
+            //console.log('getGenericControl data: ' + self.properties.data);
+            var template = [
+                '<div class="ui-selectmenu"><div class="ui-select-data-container">',
+                '<input class="ui-select-data ui-selectmenu-value" type="text"  role="textbox" id="${id}" value="${value}" />',
+                '</div>',
+                '<div class="ui-selectmenu-btn"><i class="biz-btn-caret"></i></div>',
+                '</div>'].join("\n");
+            
+            var result = self.findDataById(self.properties.value);
+            self.myinput = $.tmpl(template, result);
+            console.log(self.properties.texteditable);
+
+            if (self.getBoolean(self.properties.texteditable)) {
+                var input = $("input", self.myinput);
+                // If jquery > 1.9
+                if (input.prop) {
+                    input.prop("readonly", true);
+                } else {
+                    input.attr("readonly", true);
+                }
+            }
+            
+            self.inputCombo = self.inputCombo = $(".ui-selectmenu-value", self.myinput);
+            self.selectedValue = result;
+
+            self.configureBindings();
         } catch (e) {
             self.myinput = $("<div>Error</div>");
         }
@@ -47,7 +77,7 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
         var self = this;
         var control = self.getControl();
 
-        if (self.properties.designMode)
+        if (self.properties.designMode == true)
             return;
             
         self.inputCombo.focus(function () {
