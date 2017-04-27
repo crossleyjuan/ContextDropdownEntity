@@ -87,7 +87,7 @@
       "type": "userfield",
       "xpath": "widget.property306",
       "data": "[ { \"id\": 1, \"value\": \"test1\"}, { \"id\": 2, \"value\": \"test2\" }]",
-      "value": "NFhYo2fbD",
+      "value": "",
       "control": "ContextDropdownEntity",
       "extendedData": "",
       "displayName": "nhjmRyAur",
@@ -101,7 +101,7 @@
       "labelWidth": 72,
       "valueWidth": 296,
       "displaytype": "vQ2tfPFpI",
-      "submitOnChange": true
+      "submitOnChange": "false"
     }
   },
   {

@@ -28,7 +28,7 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
         self.properties.emptytext = (self.properties.emptytext != undefined) ? self.properties.emptytext: "-";
         try {
             debugger;
-            if (self.properties.designMode) {
+            if (self.properties.designMode == "true" || self.properties.designMode == true) {
                 self.properties.data = [ { id: 1, value: 'test1'}, { id: 2, value: 'test2' }]
                 self.properties.value = "1";
             } else {
@@ -51,6 +51,11 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
             
             var result = self.findDataById(self.properties.value);
             self.myinput = $.tmpl(template, result);
+            
+            if ((self.properties.value == undefined) || (self.properties.value == "")) {
+                var input = $("input", self.myinput);
+                input.val("Please select...");
+            }
             console.log(self.properties.texteditable);
 
             if (!self.getBoolean(self.properties.texteditable)) {
@@ -220,6 +225,7 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
     *   Draws the mini-popup
     */
     internalComboDropDown: function (data) {
+            debugger;
         $(".ui-select-dropdown.open").remove();
         var self = this, selectTmp = {}, objSelected = {};
         /** temp templates **/
@@ -414,7 +420,7 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
         self.properties.originalValue = self.getValue();
 
         if (selectedId === "") {
-            self.inputCombo.val('');
+            self.inputCombo.val(self.properties.emptytext);
         } else {
             self.inputCombo.val(selectedLabel);
         }
