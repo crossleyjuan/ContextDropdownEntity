@@ -15,6 +15,34 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
         return result;
     },
     
+    initializeControl: function() {
+        var self = this;
+        
+        if (self.initialized == true) {
+            return;
+        }
+        
+        self.properties.allowempty = (self.properties.allowempty != undefined) ? self.getBoolean(self.properties.allowempty): true;
+        self.properties.texteditable = (self.properties.texteditable != undefined) ? self.getBoolean(self.properties.texteditable): true;
+        self.properties.emptytext = (self.properties.emptytext != undefined) ? self.properties.emptytext: "-";
+        if (self.properties.designMode == "true" || self.properties.designMode == true) {
+            self.properties.data = [ { id: 1, value: 'test1'}, { id: 2, value: 'test2' }]
+            self.properties.value = "1";
+            self.properties.designMode = true;
+        } else {
+            self.properties.data = JSON.parse(self.properties.data);
+            self.properties.designMode = false;
+        }
+            
+        if (self.getBoolean(self.properties.allowempty)) {
+            var emptyValue = { id: undefined, value: self.properties.emptytext }
+            self.properties.data.splice(0, 0, emptyValue);
+        }
+        console.log("xpath: " + properties.sdata);
+        
+        self.initialized == true;
+    },
+    
     getGenericControl: function () {
         //standard initialization
         var self = this;
@@ -23,23 +51,9 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
         var extendedData = self.extendedData;
         
         // Check defaults
-        self.properties.allowempty = (self.properties.allowempty != undefined) ? self.getBoolean(self.properties.allowempty): true;
-        self.properties.texteditable = (self.properties.texteditable != undefined) ? self.getBoolean(self.properties.texteditable): true;
-        self.properties.emptytext = (self.properties.emptytext != undefined) ? self.properties.emptytext: "-";
         try {
             debugger;
-            if (self.properties.designMode == "true" || self.properties.designMode == true) {
-                self.properties.data = [ { id: 1, value: 'test1'}, { id: 2, value: 'test2' }]
-                self.properties.value = "1";
-            } else {
-                self.properties.data = JSON.parse(self.properties.data);
-            }
-            
-            if (self.getBoolean(self.properties.allowempty)) {
-                var emptyValue = { id: undefined, value: self.properties.emptytext }
-                self.properties.data.splice(0, 0, emptyValue);
-            }
-            console.log("xpath: " + properties.sdata);
+            self.initializeControl();
             
             //console.log('getGenericControl data: ' + self.properties.data);
             var template = [
@@ -71,7 +85,9 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
             self.inputCombo = self.inputCombo = $(".ui-selectmenu-value", self.myinput);
             self.selectedValue = result;
 
-            self.configureBindings();
+            if (!self.properties.designMode) {
+                self.configureBindings();
+            }
         } catch (e) {
             self.myinput = $("<div>Error</div>");
         }
@@ -441,6 +457,9 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
     */
     setDisplayValue: function (value) {
         var self = this;
+        debugger;
+        // This is to ensure the values have been initialized as the getGenericControl is not called yet when using readonly
+        self.initializeControl();
         try {
             var properties = self.properties;
             var comboValue = '';

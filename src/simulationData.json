@@ -132,5 +132,34 @@
       "displaytype": "dj9ytq7og",
       "submitOnChange": true
     }
+  },
+  {
+    "id": "U7wz1pemX",
+    "name": "Readonly Runtime",
+    "properties": {
+      "id": "B2407C91-FE14-4183-A9E1-FA2D924C5E55",
+      "userfieldGuid": "B2407C91-FE14-4183-A9E1-FA2D924C5E55",
+      "designMode": false,
+      "type": "userfield",
+      "xpath": "widget.property385",
+      "data": "[ { \"id\": 1, \"value\": \"test1\"}, { \"id\": 2, \"value\": \"test2\" }]",
+      "value": "1",
+      "control": "ContextDropdownEntity",
+      "extendedData": "",
+      "displayName": "Readonly Runtime",
+      "visible": true,
+      "editable": "false",
+      "texteditable": true,
+      "allowempty": true,
+      "emptytext": "-",
+      "required": true,
+      "displayType": "both",
+      "labelAlign": "BVMSjLscA",
+      "valueAlign": "qy5WzCqWb",
+      "labelWidth": 520,
+      "valueWidth": 766,
+      "displaytype": "hMKIa2a2Q",
+      "submitOnChange": "false"
+    }
   }
 ]
