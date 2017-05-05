@@ -54,6 +54,9 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
             debugger;
             self.initializeControl();
             
+            if (!self.properties.editable) {
+                return;
+            }
             //console.log('getGenericControl data: ' + self.properties.internalData);
             var template = [
                 '<div class="ui-selectmenu"><div class="ui-select-data-container">',
@@ -84,7 +87,7 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
             self.inputCombo = self.inputCombo = $(".ui-selectmenu-value", self.myinput);
             self.selectedValue = result;
 
-            if (!self.properties.designMode) {
+            if (!self.properties.designMode && self.properties.editable == true) {
                 self.configureBindings();
             }
         } catch (e) {
@@ -432,6 +435,7 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
         var selectedId = val.id || "";
         var selectedLabel = val.value || "";
 
+        debugger;
         self.properties.originalValue = self.getValue();
 
         if (selectedId === "") {
@@ -442,7 +446,7 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
 
         self.selectedValue = { id: selectedId, value: selectedLabel }; 
         
-        if (self.properties.submitOnChange) {
+        if (self.properties.submitOnChange && self.properties.designMode == false) {
             self.saveForm().done(function() {
                 self.refreshForm();
             });

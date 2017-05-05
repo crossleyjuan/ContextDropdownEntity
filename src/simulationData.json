@@ -26,32 +26,6 @@
     }
   },
   {
-    "id": "inIbl5tv4",
-    "name": "Scenario",
-    "properties": {
-      "id": "a896d038-c1b2-4f67-9b08-70897728e753",
-      "userfieldGuid": "a896d038-c1b2-4f67-9b08-70897728e753",
-      "designMode": "false",
-      "type": "userfield",
-      "xpath": "a.b.c",
-      "data": "[ { \"id\": 1, \"value\": \"test1\"}, { \"id\": 2, \"value\": \"test2\" }]",
-      "value": "1",
-      "targetXpath": "a.b.c",
-      "control": "ContextDropdownEntity",
-      "extendedData": "",
-      "displayName": "Test",
-      "visible": true,
-      "editable": true,
-      "required": true,
-      "displayType": "both",
-      "labelAlign": "n8ewqrS9s",
-      "valueAlign": "GBJMYp3Zk",
-      "labelWidth": 866,
-      "valueWidth": 447,
-      "displaytype": "mEK6FRXCe"
-    }
-  },
-  {
     "id": "Y7QepwneE",
     "name": "Readonly Design",
     "properties": {
@@ -130,7 +104,7 @@
       "labelWidth": 916,
       "valueWidth": 314,
       "displaytype": "dj9ytq7og",
-      "submitOnChange": true
+      "submitOnChange": "true"
     }
   },
   {
