@@ -26,20 +26,19 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
         self.properties.texteditable = (self.properties.texteditable != undefined) ? self.getBoolean(self.properties.texteditable): true;
         self.properties.emptytext = (self.properties.emptytext != undefined) ? self.properties.emptytext: "-";
         if (self.properties.designMode == "true" || self.properties.designMode == true) {
-            self.properties.data = [ { id: 1, value: 'test1'}, { id: 2, value: 'test2' }]
+            self.properties.internalData = [ { id: 1, value: 'test1'}, { id: 2, value: 'test2' }]
             self.properties.value = "1";
             self.properties.designMode = true;
         } else {
-            self.properties.data = JSON.parse(self.properties.data);
+            self.properties.internalData = JSON.parse(self.properties.data);
             self.properties.designMode = false;
         }
             
         if (self.getBoolean(self.properties.allowempty)) {
             var emptyValue = { id: undefined, value: self.properties.emptytext }
-            self.properties.data.splice(0, 0, emptyValue);
+            self.properties.internalData.splice(0, 0, emptyValue);
         }
-        console.log("xpath: " + properties.sdata);
-        
+
         self.initialized == true;
     },
     
@@ -55,7 +54,7 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
             debugger;
             self.initializeControl();
             
-            //console.log('getGenericControl data: ' + self.properties.data);
+            //console.log('getGenericControl data: ' + self.properties.internalData);
             var template = [
                 '<div class="ui-selectmenu"><div class="ui-select-data-container">',
                 '<input class="ui-select-data ui-selectmenu-value" type="text"  role="textbox" id="${id}" value="${value}" />',
@@ -146,7 +145,7 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
         var extendedData = self.extendedData;
         //self.showLoadingData();
 
-        var data = properties.data;
+        var data = properties.internalData;
         
 //        self.hideLoadingData();
         try {
@@ -175,8 +174,8 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
     findDataById: function (id) {
         var self = this;
         var result = {};
-        if (self.properties.data) {
-            $.each(self.properties.data, function (key, value) {
+        if (self.properties.internalData) {
+            $.each(self.properties.internalData, function (key, value) {
                 if (value.id == id) {
                     result = value;
                 }
@@ -193,11 +192,11 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
         var self = this;
         var result = -1;
 
-        if ((val !== undefined && val !== null) && (self.properties.data != undefined)) {
+        if ((val !== undefined && val !== null) && (self.properties.internalData != undefined)) {
             if (keyByKey) {
 
                 var i = -1;
-                var dataLength = self.properties.data.length - 1;
+                var dataLength = self.properties.internalData.length - 1;
                 var value;
 
                 var tvalue,
@@ -207,7 +206,7 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
                     compareVal;
 
                 while (i++ < dataLength) {
-                    value = self.properties.data[i];
+                    value = self.properties.internalData[i];
                     compareValIn = (typeof val == 'object') ? val.join(" - ") : (typeof val === 'boolean') ? val.toString() : val;
                     compareVal = $.trim(compareValIn).substring(0, compareValIn.length).toLowerCase();
 
@@ -262,8 +261,8 @@ bizagi.rendering.basicUserField.extend("bizagi.rendering.ContextDropdownEntity",
                 contFormScroll.css('overflow-y', 'hidden');
             }
         }
-        data = data || self.properties.data;
-        self.properties.data = data;
+        data = data || self.properties.internalData;
+        self.properties.internalData = data;
 
         self.repositionInterval;
         var height = containerRender.css("height");
